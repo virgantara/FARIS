@@ -1,4 +1,9 @@
-librosa
+fastapi
+uvicorn
+python-multipart
+jinja2
 torch
+librosa
 transformers
 accelerate
+soundfile
