@@ -310,9 +310,9 @@ inputs = {
 with torch.no_grad():
     output_ids = model.generate(
         **inputs,
-        max_new_tokens=300,
-        # max_new_tokens=700,
-        do_sample=False,
+        # max_new_tokens=300,
+        max_new_tokens=700,
+        do_sample=True,
         temperature=None
     )
 
