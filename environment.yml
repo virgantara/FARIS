@@ -24,9 +24,6 @@ dependencies:
   # Environment variables
   - python-dotenv
 
-  # OpenAI-compatible API client
-  - openai
-
   # Web backend
   - fastapi
   - uvicorn
@@ -35,6 +32,8 @@ dependencies:
 
   # Hugging Face and Qwen Omni stack
   - pip:
+      - openai
+      - soundfile
       - transformers>=4.57.0
       - accelerate
       - safetensors
