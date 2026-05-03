@@ -1,0 +1,47 @@
+name: qwen3-audio
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.10
+  - pip
+
+  # Core scientific stack
+  - numpy
+  - scipy
+
+  # Audio/video processing
+  - ffmpeg
+  - librosa
+  - soundfile
+
+  # PyTorch with CUDA 12.1, suitable for RTX 4090
+  - pytorch
+  - pytorch-cuda=12.1
+
+  # Environment variables
+  - python-dotenv
+
+  # OpenAI-compatible API client
+  - openai
+
+  # Web backend
+  - fastapi
+  - uvicorn
+  - python-multipart
+  - jinja2
+
+  # Hugging Face and Qwen Omni stack
+  - pip:
+      - transformers>=4.57.0
+      - accelerate
+      - safetensors
+      - sentencepiece
+      - protobuf
+      - einops
+      - tiktoken
+      - bitsandbytes
+      - qwen-omni-utils
