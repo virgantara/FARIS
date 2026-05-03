@@ -32,7 +32,13 @@ processor = Qwen3OmniMoeProcessor.from_pretrained(
 model = Qwen3OmniMoeForConditionalGeneration.from_pretrained(
     model_name,
     device_map="auto",
+    max_memory={
+        0: "22GiB",
+        "cpu": "64GiB"
+    },
     quantization_config=bnb_config,
+    torch_dtype=torch.float16,
+    low_cpu_mem_usage=True,
     trust_remote_code=True
 )
 
@@ -334,7 +340,7 @@ inputs = processor(
     use_audio_in_video=False
 )
 
-inputs = inputs.to(model.device)
+inputs = inputs.to("cuda")
 
 
 with torch.no_grad():
@@ -343,7 +349,7 @@ with torch.no_grad():
         return_audio=False,
         thinker_return_dict_in_generate=True,
         use_audio_in_video=False,
-        max_new_tokens=900,
+        max_new_tokens=512,
         do_sample=False
     )
 
