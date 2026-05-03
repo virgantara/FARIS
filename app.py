@@ -1,29 +1,42 @@
+import os
+import tempfile
+import requests
 import torch
 import librosa
+
+from dotenv import load_dotenv
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 from transformers import AutoProcessor, Qwen2AudioForConditionalGeneration
 
-model_name = "Qwen/Qwen2-Audio-7B-Instruct"
-audio_path = "data/sample.mp3"
+load_dotenv()
 
-processor = AutoProcessor.from_pretrained(
-    model_name,
-    trust_remote_code=True
+APP_HOST = os.getenv("APP_HOST", "0.0.0.0")
+APP_PORT = int(os.getenv("APP_PORT", "8000"))
+DEFAULT_MAX_NEW_TOKENS = int(os.getenv("MAX_NEW_TOKENS", "700"))
+
+# =========================
+# FastAPI App
+# =========================
+app = FastAPI(
+    title="FARIS Speaking Evaluation API",
+    description="Audio URL -> Qwen2-Audio-7B-Instruct -> FARIS speaking evaluation",
+    version="1.0.0"
 )
 
-model = Qwen2AudioForConditionalGeneration.from_pretrained(
-    model_name,
-    device_map="auto",
-    torch_dtype=torch.float16,
-    trust_remote_code=True
-)
 
-# Load audio as waveform
-audio, sr = librosa.load(
-    audio_path,
-    sr=processor.feature_extractor.sampling_rate
-)
+# =========================
+# Request Schema
+# =========================
+class AudioUrlRequest(BaseModel):
+    audio_url: str
+    max_new_tokens: int | None = None
 
-prompt = """
+
+# =========================
+# FARIS Prompt
+# =========================
+FARIS_PROMPT = """
 You are FARIS, an English academic speaking evaluator for university students.
 
 Your task is to analyze the student's spoken English from the audio.
@@ -278,50 +291,178 @@ Next Practice Task:
 ...
 """
 
-conversation = [
-    {
-        "role": "user",
-        "content": [
-            {"type": "audio", "audio_url": audio_path},
-            {"type": "text", "text": prompt}
-        ]
+
+# # =========================
+# # Load Model Once at Startup
+# # =========================
+model_name = "Qwen/Qwen2-Audio-7B-Instruct"
+
+print("Loading processor...")
+processor = AutoProcessor.from_pretrained(
+    model_name,
+    trust_remote_code=True
+)
+
+print("Loading model...")
+model = Qwen2AudioForConditionalGeneration.from_pretrained(
+    model_name,
+    device_map="auto",
+    torch_dtype=torch.float16,
+    trust_remote_code=True
+)
+
+model.eval()
+print("Model loaded successfully.")
+
+
+# =========================
+# Helper: Download Audio URL
+# =========================
+def download_audio(audio_url: str) -> str:
+    try:
+        response = requests.get(audio_url, timeout=60)
+        response.raise_for_status()
+    except Exception as e:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Failed to download audio: {str(e)}"
+        )
+
+    content_type = response.headers.get("content-type", "")
+
+    suffix = ".wav"
+    if "mpeg" in content_type or audio_url.lower().endswith(".mp3"):
+        suffix = ".mp3"
+    elif "wav" in content_type or audio_url.lower().endswith(".wav"):
+        suffix = ".wav"
+    elif "ogg" in content_type or audio_url.lower().endswith(".ogg"):
+        suffix = ".ogg"
+    elif "webm" in content_type or audio_url.lower().endswith(".webm"):
+        suffix = ".webm"
+    elif "m4a" in content_type or audio_url.lower().endswith(".m4a"):
+        suffix = ".m4a"
+
+    temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+    temp_file.write(response.content)
+    temp_file.close()
+
+    return temp_file.name
+
+
+# =========================
+# Health Check
+# =========================
+@app.get("/")
+def root():
+    return {
+        "message": "FARIS Speaking Evaluation API is running",
+        "model": model_name
     }
-]
 
-text = processor.apply_chat_template(
-    conversation,
-    add_generation_prompt=True,
-    tokenize=False
-)
 
-inputs = processor(
-    text=text,
-    audio=[audio],
-    sampling_rate=sr,
-    return_tensors="pt",
-    padding=True
-)
+# =========================
+# Main Endpoint: Audio URL
+# =========================
+@app.post("/evaluate-url")
+def evaluate_audio_url(request: AudioUrlRequest):
+    temp_audio_path = None
 
-inputs = {
-    k: v.to(model.device) if hasattr(v, "to") else v
-    for k, v in inputs.items()
-}
+    try:
+        temp_audio_path = download_audio(request.audio_url)
 
-with torch.no_grad():
-    output_ids = model.generate(
-        **inputs,
-        # max_new_tokens=300,
-        max_new_tokens=700,
-        do_sample=False,
-        temperature=None
+        # Load audio as waveform
+        audio, sr = librosa.load(
+            temp_audio_path,
+            sr=processor.feature_extractor.sampling_rate
+        )
+
+        conversation = [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "audio",
+                        "audio_url": request.audio_url
+                    },
+                    {
+                        "type": "text",
+                        "text": FARIS_PROMPT
+                    }
+                ]
+            }
+        ]
+
+        text = processor.apply_chat_template(
+            conversation,
+            add_generation_prompt=True,
+            tokenize=False
+        )
+
+        inputs = processor(
+            text=text,
+            audio=[audio],
+            sampling_rate=sr,
+            return_tensors="pt",
+            padding=True
+        )
+
+        inputs = {
+            k: v.to(model.device) if hasattr(v, "to") else v
+            for k, v in inputs.items()
+        }
+
+        max_new_tokens = request.max_new_tokens or DEFAULT_MAX_NEW_TOKENS
+
+        with torch.no_grad():
+            output_ids = model.generate(
+                **inputs,
+                max_new_tokens=max_new_tokens,
+                do_sample=False
+            )
+
+        generated_ids = output_ids[:, inputs["input_ids"].shape[1]:]
+
+        response_text = processor.batch_decode(
+            generated_ids,
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=False
+        )[0]
+
+        return {
+            "success": True,
+            "audio_url": request.audio_url,
+            "model": model_name,
+            "max_new_tokens": max_new_tokens,
+            "result": response_text
+        }
+
+    except HTTPException:
+        raise
+
+    except torch.cuda.OutOfMemoryError:
+        torch.cuda.empty_cache()
+        raise HTTPException(
+            status_code=500,
+            detail="CUDA out of memory. Try shorter audio or reduce max_new_tokens."
+        )
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )
+
+    finally:
+        if temp_audio_path and os.path.exists(temp_audio_path):
+            os.remove(temp_audio_path)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(
+        "app:app",
+        host=APP_HOST,
+        port=APP_PORT,
+        reload=False
     )
-
-generated_ids = output_ids[:, inputs["input_ids"].shape[1]:]
-
-response = processor.batch_decode(
-    generated_ids,
-    skip_special_tokens=True,
-    clean_up_tokenization_spaces=False
-)[0]
-
-print(response)
