@@ -456,13 +456,3 @@ def evaluate_audio_url(request: AudioUrlRequest):
         if temp_audio_path and os.path.exists(temp_audio_path):
             os.remove(temp_audio_path)
 
-
-if __name__ == "__main__":
-    import uvicorn
-
-    uvicorn.run(
-        "app:app",
-        host=APP_HOST,
-        port=APP_PORT,
-        reload=False
-    )
