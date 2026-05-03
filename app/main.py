@@ -9,7 +9,7 @@ from app.queue_manager import inference_worker
 
 app = FastAPI(
     title="FARIS Speaking Evaluation API",
-    description="Audio URL -> queue -> Qwen2-Audio-7B-Instruct -> FARIS evaluation",
+    description="Audio URL -> Redis Queue -> Qwen2-Audio-7B-Instruct -> FARIS evaluation",
     version="1.0.0"
 )
 

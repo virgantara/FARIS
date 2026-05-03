@@ -7,3 +7,5 @@ librosa
 transformers
 accelerate
 soundfile
+redis
+rq
