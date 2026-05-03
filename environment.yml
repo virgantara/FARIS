@@ -16,7 +16,6 @@ dependencies:
   # Audio/video processing
   - ffmpeg
   - librosa
-  - soundfile
 
   # PyTorch with CUDA 12.1, suitable for RTX 4090
   - pytorch
