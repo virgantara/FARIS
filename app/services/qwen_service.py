@@ -31,25 +31,41 @@ class QwenAudioService:
     def evaluate_audio(
         self,
         audio_path: str,
-        audio_url: str,
-        max_new_tokens: int
+        audio_url: str = None,
+        max_new_tokens: int = 1800
     ) -> str:
+        target_sr = self.processor.feature_extractor.sampling_rate
+
         audio, sr = librosa.load(
             audio_path,
-            sr=self.processor.feature_extractor.sampling_rate
+            sr=target_sr,
+            mono=True
         )
 
         conversation = [
+            {
+                "role": "system",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": FARIS_PROMPT
+                    }
+                ]
+            },
             {
                 "role": "user",
                 "content": [
                     {
                         "type": "audio",
-                        "audio_url": audio_url
+                        "audio_url": audio_url or audio_path
                     },
                     {
                         "type": "text",
-                        "text": FARIS_PROMPT
+                        "text": (
+                            "Evaluate this student's spoken English. "
+                            "Return the complete strict JSON object. "
+                            "Do not return only transcript."
+                        )
                     }
                 ]
             }
@@ -63,8 +79,8 @@ class QwenAudioService:
 
         inputs = self.processor(
             text=text,
-            audio=[audio],
-            sampling_rate=sr,
+            audios=[audio],
+            sampling_rate=target_sr,
             return_tensors="pt",
             padding=True
         )
@@ -78,7 +94,9 @@ class QwenAudioService:
             output_ids = self.model.generate(
                 **inputs,
                 max_new_tokens=max_new_tokens,
-                do_sample=False
+                do_sample=False,
+                temperature=None,
+                top_p=None
             )
 
         generated_ids = output_ids[:, inputs["input_ids"].shape[1]:]
@@ -89,7 +107,7 @@ class QwenAudioService:
             clean_up_tokenization_spaces=False
         )[0]
 
-        return response_text
+        return response_text.strip()
 
 
 qwen_audio_service = QwenAudioService()
