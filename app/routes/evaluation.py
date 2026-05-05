@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from app.auth import verify_api_key
+# from app.auth import verify_api_key
 from app.config import MODEL_NAME
 from app.schemas import (
     AudioUrlRequest,
@@ -18,7 +18,7 @@ from app.queue_manager import (
 
 router = APIRouter(
     tags=["Evaluation"],
-    dependencies=[Depends(verify_api_key)]
+    # dependencies=[Depends(verify_api_key)]
 )
 
 
