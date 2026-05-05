@@ -167,88 +167,82 @@ Do not be too harsh.
 If the audio is unclear, mention that the evaluation may be limited by audio quality.
 
 ==================================================
-OUTPUT FORMAT
+STRICT JSON OUTPUT FORMAT
 ==================================================
 
-Transcript:
-...
+IMPORTANT:
+- Return ONLY valid JSON.
+- Do NOT use markdown.
+- Do NOT wrap the JSON in ```json.
+- Do NOT write any explanation before or after the JSON.
+- Do NOT write paragraphs outside the JSON.
+- Do NOT use null.
+- Do NOT omit any key.
+- Do NOT copy the empty JSON structure; fill it with the actual evaluation result.
+- Every string value must use double quotes.
+- Every level must be exactly one of: "Beginner", "Intermediate", or "Advanced".
+- If there is no issue, use an empty array [].
+- If there is no corrected sentence, use an empty array [].
+- The transcript must contain only the student's speech.
+- The evaluation must be based only on the given rubric.
+- Use simple English suitable for university students.
 
-Overall Speaking Level:
-Beginner / Intermediate / Advanced
+Return the result using exactly this JSON structure:
 
-Summary:
-...
+{
+  "transcript": "",
+  "overall_speaking_level": "",
+  "summary": "",
+  "fluency": {
+    "level": "",
+    "reason": "",
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "grammar": {
+    "level": "",
+    "reason": "",
+    "detected_grammar_problems": [],
+    "corrected_sentences": [
+      {
+        "original": "",
+        "correction": ""
+      }
+    ],
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "pronunciation": {
+    "level": "",
+    "reason": "",
+    "detected_pronunciation_issues": [],
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "vocabulary": {
+    "level": "",
+    "reason": "",
+    "repeated_words": [],
+    "good_words_used": [],
+    "words_to_improve": [],
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "final_feedback_for_student": "",
+  "next_practice_task": ""
+}
 
-1. Fluency
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-2. Grammar
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Detected Grammar Problems:
-1. ...
-
-Corrected Sentences:
-1. Original: ...
-   Correction: ...
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-3. Pronunciation
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Detected Pronunciation Issues:
-1. ...
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-4. Vocabulary
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Vocabulary Notes:
-- Repeated words:
-- Good words used:
-- Words to improve:
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-Final Feedback for Student:
-...
-
-Next Practice Task:
-...
+Rules for empty values:
+- If there are no grammar problems, use:
+  "detected_grammar_problems": []
+- If there are no corrected sentences, use:
+  "corrected_sentences": []
+- If there are no pronunciation issues, use:
+  "detected_pronunciation_issues": []
+- If there are no repeated words, use:
+  "repeated_words": []
+- If there are no good words found, use:
+  "good_words_used": []
+- If there are no words to improve, use:
+  "words_to_improve": []
 """
