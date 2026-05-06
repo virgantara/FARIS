@@ -79,7 +79,7 @@ class QwenAudioService:
 
         inputs = self.processor(
             text=text,
-            audios=[audio],
+            audio=[audio],
             sampling_rate=target_sr,
             return_tensors="pt",
             padding=True
