@@ -44,15 +44,6 @@ class QwenAudioService:
 
         conversation = [
             {
-                "role": "system",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": FARIS_PROMPT
-                    }
-                ]
-            },
-            {
                 "role": "user",
                 "content": [
                     {
@@ -61,11 +52,7 @@ class QwenAudioService:
                     },
                     {
                         "type": "text",
-                        "text": (
-                            "Evaluate this student's spoken English. "
-                            "Return the complete strict JSON object. "
-                            "Do not return only transcript."
-                        )
+                        "text": FARIS_PROMPT
                     }
                 ]
             }
