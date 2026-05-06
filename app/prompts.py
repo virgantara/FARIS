@@ -167,88 +167,68 @@ Do not be too harsh.
 If the audio is unclear, mention that the evaluation may be limited by audio quality.
 
 ==================================================
-OUTPUT FORMAT
+STRICT JSON OUTPUT FORMAT
 ==================================================
 
-Transcript:
-...
+Return ONLY valid JSON.
+Do NOT use markdown.
+Do NOT use Python dictionary format.
+Do NOT use single quotes.
+Do NOT write any explanation before or after JSON.
+Do NOT return only a short summary.
+Do NOT create keys outside the schema.
+Every key and every string value must use double quotes.
+The first character must be { and the last character must be }.
 
-Overall Speaking Level:
-Beginner / Intermediate / Advanced
+Return exactly this JSON structure:
 
-Summary:
-...
+{
+  "transcript": "",
+  "overall_speaking_level": "",
+  "summary": "",
+  "fluency": {
+    "level": "",
+    "reason": "",
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "grammar": {
+    "level": "",
+    "reason": "",
+    "detected_grammar_problems": [],
+    "corrected_sentences": [
+      {
+        "original": "",
+        "correction": ""
+      }
+    ],
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "pronunciation": {
+    "level": "",
+    "reason": "",
+    "detected_pronunciation_issues": [],
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "vocabulary": {
+    "level": "",
+    "reason": "",
+    "repeated_words": [],
+    "good_words_used": [],
+    "words_to_improve": [],
+    "feedback": "",
+    "improvement_suggestion": ""
+  },
+  "final_feedback_for_student": "",
+  "next_practice_task": ""
+}
 
-1. Fluency
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-2. Grammar
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Detected Grammar Problems:
-1. ...
-
-Corrected Sentences:
-1. Original: ...
-   Correction: ...
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-3. Pronunciation
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Detected Pronunciation Issues:
-1. ...
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-4. Vocabulary
-Level:
-Beginner / Intermediate / Advanced
-
-Reason:
-...
-
-Vocabulary Notes:
-- Repeated words:
-- Good words used:
-- Words to improve:
-
-Feedback:
-...
-
-Improvement Suggestion:
-...
-
-Final Feedback for Student:
-...
-
-Next Practice Task:
-...
+CRITICAL:
+Return the complete JSON object.
+Do not return only transcript.
+Do not return {'spokenEnglish': ...}.
+Do not use Chinese or Indonesian in the result.
+Use English only.
 """
