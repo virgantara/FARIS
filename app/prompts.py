@@ -170,17 +170,24 @@ If the audio is unclear, mention that the evaluation may be limited by audio qua
 STRICT JSON OUTPUT FORMAT
 ==================================================
 
-Return ONLY valid JSON.
-Do NOT use markdown.
-Do NOT use Python dictionary format.
-Do NOT use single quotes.
-Do NOT write any explanation before or after JSON.
-Do NOT return only a short summary.
-Do NOT create keys outside the schema.
-Every key and every string value must use double quotes.
-The first character must be { and the last character must be }.
+IMPORTANT:
+- Return ONLY valid JSON.
+- Do NOT use markdown.
+- Do NOT wrap the JSON in ```json.
+- Do NOT write any explanation before or after the JSON.
+- Do NOT write paragraphs outside the JSON.
+- Do NOT use null.
+- Do NOT omit any key.
+- Do NOT copy the empty JSON structure; fill it with the actual evaluation result.
+- Every string value must use double quotes.
+- Every level must be exactly one of: "Beginner", "Intermediate", or "Advanced".
+- If there is no issue, use an empty array [].
+- If there is no corrected sentence, use an empty array [].
+- The transcript must contain only the student's speech.
+- The evaluation must be based only on the given rubric.
+- Use simple English suitable for university students.
 
-Return exactly this JSON structure:
+Return the result using exactly this JSON structure:
 
 {
   "transcript": "",
@@ -225,10 +232,17 @@ Return exactly this JSON structure:
   "next_practice_task": ""
 }
 
-CRITICAL:
-Return the complete JSON object.
-Do not return only transcript.
-Do not return {'spokenEnglish': ...}.
-Do not use Chinese or Indonesian in the result.
-Use English only.
+Rules for empty values:
+- If there are no grammar problems, use:
+  "detected_grammar_problems": []
+- If there are no corrected sentences, use:
+  "corrected_sentences": []
+- If there are no pronunciation issues, use:
+  "detected_pronunciation_issues": []
+- If there are no repeated words, use:
+  "repeated_words": []
+- If there are no good words found, use:
+  "good_words_used": []
+- If there are no words to improve, use:
+  "words_to_improve": []
 """
