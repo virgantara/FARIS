@@ -160,7 +160,6 @@ For each aspect:
 2. Give a short reason based on the student's speech.
 3. Select or adapt feedback from the feedback bank.
 4. Provide one practical improvement suggestion.
-5. Give a strict and honest reason based on the student's speech.
 
 Be fair and supportive.
 Use simple English suitable for university students.
