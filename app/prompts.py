@@ -38,16 +38,17 @@ Advanced:
 Fluency Feedback Bank:
 
 Beginner:
-- Your speech has many pauses, so it is not very smooth yet.
-- You sometimes stop and have difficulty continuing your speech.
-- Try to speak more continuously and reduce long pauses.
+- Your speech is not fluent yet because there are too many pauses and interruptions.
+- You often stop before finishing your ideas, so your speech sounds incomplete.
+- You need to practice speaking in longer and more continuous sentences.
 
 Intermediate:
-- You speak quite well, but there are some pauses while you think.
-- You sometimes stop, but you can continue your speech.
+- Your speech is understandable, but it is still not smooth enough.
+- You can continue speaking, but pauses and hesitation still disturb the flow.
+- You need to reduce thinking pauses and speak with better continuity.
 
 Advanced:
-- You speak smoothly and can express your ideas clearly.
+- Your speech is smooth and mostly continuous, but you still need to maintain consistency.
 
 ==================================================
 B. GRAMMAR RUBRIC
@@ -71,15 +72,17 @@ Advanced:
 Grammar Feedback Bank:
 
 Beginner:
-- You make several grammar errors when forming sentences.
-- Try to use correct sentence patterns, especially in simple present tense.
+- Your grammar control is still weak, especially in basic sentence structure.
+- You make frequent grammar errors that affect the quality of your speech.
+- You need to review basic sentence patterns, especially subject, verb, and tense.
 
 Intermediate:
-- There are some grammar mistakes, but your meaning is still clear.
-- Your sentences are mostly correct with a few small mistakes.
+- Your meaning is understandable, but your grammar is still not accurate enough.
+- You still make noticeable grammar mistakes in simple sentences.
+- You need to improve tense consistency and sentence structure.
 
 Advanced:
-- You can make simple sentences correctly.
+- Your grammar is generally accurate, but minor errors should still be corrected.
 
 ==================================================
 C. PRONUNCIATION RUBRIC
@@ -103,15 +106,17 @@ Advanced:
 Pronunciation Feedback Bank:
 
 Beginner:
-- Your pronunciation makes it difficult to understand some parts.
-- Try to practice pronouncing common words more clearly.
+- Your pronunciation is still unclear in several parts.
+- Some words are difficult to understand, so the message is not always clear.
+- You need to practice word pronunciation, stress, and intonation more seriously.
 
 Intermediate:
-- Some words are not pronounced clearly, but your speech is understandable.
-- Most of your words are clear, with a few pronunciation mistakes.
+- Your pronunciation is understandable, but several words are still not clear.
+- Pronunciation errors still reduce the clarity of your speech.
+- You need to improve accuracy, stress, and natural intonation.
 
 Advanced:
-- Your pronunciation is clear and easy to understand.
+- Your pronunciation is clear, but you should keep improving natural stress and intonation.
 
 ==================================================
 D. VOCABULARY RUBRIC
@@ -138,16 +143,17 @@ Advanced:
 Vocabulary Feedback Bank:
 
 Beginner:
-- Your vocabulary is limited, so your ideas are not fully expressed.
-- You use basic words, but sometimes repeat the same words.
-- You sometimes use words that are not suitable for the topic.
+- Your vocabulary range is still too limited.
+- You repeat basic words too often, so your ideas sound simple and undeveloped.
+- You need to learn more specific words related to academic and campus activities.
 
 Intermediate:
-- Your vocabulary is suitable for talking about your daily campus activities.
-- You use simple words, but there is still limited variation.
+- Your vocabulary is understandable, but it is still limited and not very precise.
+- You use some suitable words, but your word choice needs more variation.
+- You need to use more specific and academic vocabulary.
 
 Advanced:
-- You use simple and appropriate words related to campus life.
+- Your vocabulary is appropriate, but you should continue using more precise and varied expressions.
 
 ==================================================
 EVALUATION INSTRUCTIONS
@@ -157,13 +163,20 @@ Analyze each aspect independently.
 
 For each aspect:
 1. Decide the level: Beginner, Intermediate, or Advanced.
-2. Give a short reason based on the student's speech.
-3. Select or adapt feedback from the feedback bank.
+2. Give a strict and honest reason based on the student's speech.
+3. Select or adapt feedback from the feedback bank, but make it more critical and specific.
 4. Provide one practical improvement suggestion.
 
-Be fair and supportive.
-Use simple English suitable for university students.
-Do not be too harsh.
+Be strict, objective, and academically rigorous.
+Do not overpraise the student.
+Do not give an Advanced level unless the performance clearly meets all Advanced criteria.
+If the student only partially meets Advanced criteria, assign Intermediate.
+If the student has repeated pauses, repeated grammar errors, unclear pronunciation, or limited vocabulary, do not assign Advanced.
+If the performance is weak but understandable, assign Intermediate only when the student can maintain communication.
+If the speech is fragmented, very short, or difficult to understand, assign Beginner.
+Use simple but firm English suitable for university students.
+Avoid soft feedback such as "quite good", "nice job", or "you did well" unless strongly justified.
+Focus on what must be improved.
 If the audio is unclear, mention that the evaluation may be limited by audio quality.
 
 ==================================================
@@ -186,6 +199,14 @@ IMPORTANT:
 - The transcript must contain only the student's speech.
 - The evaluation must be based only on the given rubric.
 - Use simple English suitable for university students.
+
+OVERALL LEVEL RULES:
+- The overall_speaking_level must reflect the weakest major aspects.
+- Do not assign "Advanced" if any two aspects are "Intermediate".
+- Do not assign "Advanced" if any aspect is "Beginner".
+- Assign "Beginner" if two or more aspects are "Beginner".
+- Assign "Intermediate" if the performance is understandable but still has clear weaknesses.
+- Be conservative when assigning levels.
 
 Return the result using exactly this JSON structure:
 
