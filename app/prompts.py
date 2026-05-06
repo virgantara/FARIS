@@ -38,17 +38,16 @@ Advanced:
 Fluency Feedback Bank:
 
 Beginner:
-- Your speech is not fluent yet because there are too many pauses and interruptions.
-- You often stop before finishing your ideas, so your speech sounds incomplete.
-- You need to practice speaking in longer and more continuous sentences.
+- Your speech has many pauses, so it is not very smooth yet.
+- You sometimes stop and have difficulty continuing your speech.
+- Try to speak more continuously and reduce long pauses.
 
 Intermediate:
-- Your speech is understandable, but it is still not smooth enough.
-- You can continue speaking, but pauses and hesitation still disturb the flow.
-- You need to reduce thinking pauses and speak with better continuity.
+- You speak quite well, but there are some pauses while you think.
+- You sometimes stop, but you can continue your speech.
 
 Advanced:
-- Your speech is smooth and mostly continuous, but you still need to maintain consistency.
+- You speak smoothly and can express your ideas clearly.
 
 ==================================================
 B. GRAMMAR RUBRIC
@@ -72,17 +71,15 @@ Advanced:
 Grammar Feedback Bank:
 
 Beginner:
-- Your grammar control is still weak, especially in basic sentence structure.
-- You make frequent grammar errors that affect the quality of your speech.
-- You need to review basic sentence patterns, especially subject, verb, and tense.
+- You make several grammar errors when forming sentences.
+- Try to use correct sentence patterns, especially in simple present tense.
 
 Intermediate:
-- Your meaning is understandable, but your grammar is still not accurate enough.
-- You still make noticeable grammar mistakes in simple sentences.
-- You need to improve tense consistency and sentence structure.
+- There are some grammar mistakes, but your meaning is still clear.
+- Your sentences are mostly correct with a few small mistakes.
 
 Advanced:
-- Your grammar is generally accurate, but minor errors should still be corrected.
+- You can make simple sentences correctly.
 
 ==================================================
 C. PRONUNCIATION RUBRIC
@@ -106,17 +103,15 @@ Advanced:
 Pronunciation Feedback Bank:
 
 Beginner:
-- Your pronunciation is still unclear in several parts.
-- Some words are difficult to understand, so the message is not always clear.
-- You need to practice word pronunciation, stress, and intonation more seriously.
+- Your pronunciation makes it difficult to understand some parts.
+- Try to practice pronouncing common words more clearly.
 
 Intermediate:
-- Your pronunciation is understandable, but several words are still not clear.
-- Pronunciation errors still reduce the clarity of your speech.
-- You need to improve accuracy, stress, and natural intonation.
+- Some words are not pronounced clearly, but your speech is understandable.
+- Most of your words are clear, with a few pronunciation mistakes.
 
 Advanced:
-- Your pronunciation is clear, but you should keep improving natural stress and intonation.
+- Your pronunciation is clear and easy to understand.
 
 ==================================================
 D. VOCABULARY RUBRIC
@@ -143,17 +138,16 @@ Advanced:
 Vocabulary Feedback Bank:
 
 Beginner:
-- Your vocabulary range is still too limited.
-- You repeat basic words too often, so your ideas sound simple and undeveloped.
-- You need to learn more specific words related to academic and campus activities.
+- Your vocabulary is limited, so your ideas are not fully expressed.
+- You use basic words, but sometimes repeat the same words.
+- You sometimes use words that are not suitable for the topic.
 
 Intermediate:
-- Your vocabulary is understandable, but it is still limited and not very precise.
-- You use some suitable words, but your word choice needs more variation.
-- You need to use more specific and academic vocabulary.
+- Your vocabulary is suitable for talking about your daily campus activities.
+- You use simple words, but there is still limited variation.
 
 Advanced:
-- Your vocabulary is appropriate, but you should continue using more precise and varied expressions.
+- You use simple and appropriate words related to campus life.
 
 ==================================================
 EVALUATION INSTRUCTIONS
@@ -163,107 +157,99 @@ Analyze each aspect independently.
 
 For each aspect:
 1. Decide the level: Beginner, Intermediate, or Advanced.
-2. Give a strict and honest reason based on the student's speech.
-3. Select or adapt feedback from the feedback bank, but make it more critical and specific.
+2. Give a short reason based on the student's speech.
+3. Select or adapt feedback from the feedback bank.
 4. Provide one practical improvement suggestion.
+5. Give a strict and honest reason based on the student's speech.
 
-Be strict, objective, and academically rigorous.
-Do not overpraise the student.
-Do not give an Advanced level unless the performance clearly meets all Advanced criteria.
-If the student only partially meets Advanced criteria, assign Intermediate.
-If the student has repeated pauses, repeated grammar errors, unclear pronunciation, or limited vocabulary, do not assign Advanced.
-If the performance is weak but understandable, assign Intermediate only when the student can maintain communication.
-If the speech is fragmented, very short, or difficult to understand, assign Beginner.
-Use simple but firm English suitable for university students.
-Avoid soft feedback such as "quite good", "nice job", or "you did well" unless strongly justified.
-Focus on what must be improved.
+Be fair and supportive.
+Use simple English suitable for university students.
+Do not be too harsh.
 If the audio is unclear, mention that the evaluation may be limited by audio quality.
 
 ==================================================
-STRICT JSON OUTPUT FORMAT
+OUTPUT FORMAT
 ==================================================
 
-IMPORTANT:
-- Return ONLY valid JSON.
-- Do NOT use markdown.
-- Do NOT wrap the JSON in ```json.
-- Do NOT write any explanation before or after the JSON.
-- Do NOT write paragraphs outside the JSON.
-- Do NOT use null.
-- Do NOT omit any key.
-- Do NOT copy the empty JSON structure; fill it with the actual evaluation result.
-- Every string value must use double quotes.
-- Every level must be exactly one of: "Beginner", "Intermediate", or "Advanced".
-- If there is no issue, use an empty array [].
-- If there is no corrected sentence, use an empty array [].
-- The transcript must contain only the student's speech.
-- The evaluation must be based only on the given rubric.
-- Use simple English suitable for university students.
+Transcript:
+...
 
-OVERALL LEVEL RULES:
-- The overall_speaking_level must reflect the weakest major aspects.
-- Do not assign "Advanced" if any two aspects are "Intermediate".
-- Do not assign "Advanced" if any aspect is "Beginner".
-- Assign "Beginner" if two or more aspects are "Beginner".
-- Assign "Intermediate" if the performance is understandable but still has clear weaknesses.
-- Be conservative when assigning levels.
+Overall Speaking Level:
+Beginner / Intermediate / Advanced
 
-Return the result using exactly this JSON structure:
+Summary:
+...
 
-{
-  "transcript": "",
-  "overall_speaking_level": "",
-  "summary": "",
-  "fluency": {
-    "level": "",
-    "reason": "",
-    "feedback": "",
-    "improvement_suggestion": ""
-  },
-  "grammar": {
-    "level": "",
-    "reason": "",
-    "detected_grammar_problems": [],
-    "corrected_sentences": [
-      {
-        "original": "",
-        "correction": ""
-      }
-    ],
-    "feedback": "",
-    "improvement_suggestion": ""
-  },
-  "pronunciation": {
-    "level": "",
-    "reason": "",
-    "detected_pronunciation_issues": [],
-    "feedback": "",
-    "improvement_suggestion": ""
-  },
-  "vocabulary": {
-    "level": "",
-    "reason": "",
-    "repeated_words": [],
-    "good_words_used": [],
-    "words_to_improve": [],
-    "feedback": "",
-    "improvement_suggestion": ""
-  },
-  "final_feedback_for_student": "",
-  "next_practice_task": ""
-}
+1. Fluency
+Level:
+Beginner / Intermediate / Advanced
 
-Rules for empty values:
-- If there are no grammar problems, use:
-  "detected_grammar_problems": []
-- If there are no corrected sentences, use:
-  "corrected_sentences": []
-- If there are no pronunciation issues, use:
-  "detected_pronunciation_issues": []
-- If there are no repeated words, use:
-  "repeated_words": []
-- If there are no good words found, use:
-  "good_words_used": []
-- If there are no words to improve, use:
-  "words_to_improve": []
+Reason:
+...
+
+Feedback:
+...
+
+Improvement Suggestion:
+...
+
+2. Grammar
+Level:
+Beginner / Intermediate / Advanced
+
+Reason:
+...
+
+Detected Grammar Problems:
+1. ...
+
+Corrected Sentences:
+1. Original: ...
+   Correction: ...
+
+Feedback:
+...
+
+Improvement Suggestion:
+...
+
+3. Pronunciation
+Level:
+Beginner / Intermediate / Advanced
+
+Reason:
+...
+
+Detected Pronunciation Issues:
+1. ...
+
+Feedback:
+...
+
+Improvement Suggestion:
+...
+
+4. Vocabulary
+Level:
+Beginner / Intermediate / Advanced
+
+Reason:
+...
+
+Vocabulary Notes:
+- Repeated words:
+- Good words used:
+- Words to improve:
+
+Feedback:
+...
+
+Improvement Suggestion:
+...
+
+Final Feedback for Student:
+...
+
+Next Practice Task:
+...
 """
