@@ -4,7 +4,6 @@ import time
 import uuid
 from typing import Any, Dict, Optional
 
-import torch
 import redis.asyncio as redis
 
 from app.config import (
@@ -93,7 +92,7 @@ async def inference_worker(worker_id: int):
     print(f"Redis inference worker {worker_id} started.")
 
     while True:
-        temp_audio_path = None
+        job_id = None
 
         try:
             item = await redis_client.blpop(QUEUE_KEY, timeout=5)
@@ -120,14 +119,9 @@ async def inference_worker(worker_id: int):
                 }
             )
 
-            temp_audio_path = await asyncio.to_thread(
-                download_audio,
-                job["audio_url"]
-            )
-
             result = await asyncio.to_thread(
                 qwen_audio_service.evaluate_audio,
-                temp_audio_path,
+                None,
                 job["audio_url"],
                 int(job["max_new_tokens"])
             )
@@ -143,23 +137,8 @@ async def inference_worker(worker_id: int):
 
             print(f"[Worker {worker_id}] Completed job: {job_id}")
 
-        except torch.cuda.OutOfMemoryError:
-            torch.cuda.empty_cache()
-
-            if "job_id" in locals():
-                await update_job(
-                    job_id,
-                    {
-                        "status": "failed",
-                        "error": "CUDA out of memory. Try shorter audio or reduce max_new_tokens.",
-                        "finished_at": time.time(),
-                    }
-                )
-
-            print(f"[Worker {worker_id}] CUDA out of memory.")
-
         except Exception as e:
-            if "job_id" in locals():
+            if job_id is not None:
                 await update_job(
                     job_id,
                     {
@@ -170,6 +149,3 @@ async def inference_worker(worker_id: int):
                 )
 
             print(f"[Worker {worker_id}] Failed: {str(e)}")
-
-        finally:
-            remove_temp_file(temp_audio_path)
