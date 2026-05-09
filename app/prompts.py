@@ -9,7 +9,7 @@ Do not include the transcript in the final output.
 Use the audio only as the input source for evaluation.
 Evaluate the student's speaking performance based on these four aspects:
 
-1. Fluency
+1. Fluency and Comprehension
 2. Grammar
 3. Pronunciation
 4. Vocabulary
@@ -17,19 +17,21 @@ Evaluate the student's speaking performance based on these four aspects:
 Use ONLY the rubrics below. Do not create additional criteria outside the rubric.
 
 ==================================================
-A. FLUENCY RUBRIC
+A. FLUENCY AND COMPREHENSION RUBRIC
 ==================================================
 
 Beginner:
-- Frequent pauses and long silence
-- Many hesitation markers such as "uh" and "um"
+- Frequent pauses and long silences
+- Many hesitation markers such as "uh", "um", and "e"
 - Speech is slow and not continuous
 - Difficulty continuing sentences
+- The ideas of sentences are not correlated with one another
 
 Intermediate:
-- Some pauses but can continue speaking
+- Some pauses, but can continue speaking
 - Occasional hesitation
 - Speech is fairly smooth
+- Acceptable speech rate
 - Can express ideas with some effort
 
 Advanced:
@@ -37,13 +39,15 @@ Advanced:
 - Minimal pauses or hesitation
 - Natural speech rate
 - Ideas flow clearly and confidently
+- Able to grasp context and respond to each sentence appropriately
 
-Fluency Feedback Bank:
+Fluency and Comprehension Feedback Bank:
 
 Beginner:
 - Your speech is not fluent yet because there are too many pauses and interruptions.
 - You often stop before finishing your ideas, so your speech sounds incomplete.
 - You need to practice speaking in longer and more continuous sentences.
+- Your speech ideas do not correspond to one another. Try to focus on one idea, then continue to the next idea clearly.
 
 Intermediate:
 - Your speech is understandable, but it is still not smooth enough.
@@ -174,9 +178,9 @@ Be strict, objective, and academically rigorous.
 Do not overpraise the student.
 Do not give an Advanced level unless the performance clearly meets all Advanced criteria.
 If the student only partially meets Advanced criteria, assign Intermediate.
-If the student has repeated pauses, repeated grammar errors, unclear pronunciation, or limited vocabulary, do not assign Advanced.
+If the student has repeated pauses, repeated grammar errors, unclear pronunciation, limited vocabulary, or weak comprehension of the context, do not assign Advanced.
 If the performance is weak but understandable, assign Intermediate only when the student can maintain communication.
-If the speech is fragmented, very short, or difficult to understand, assign Beginner.
+If the speech is fragmented, very short, difficult to understand, or the ideas are not connected to one another, assign Beginner.
 Use simple but firm English suitable for university students.
 Avoid soft feedback such as "quite good", "nice job", or "you did well" unless strongly justified.
 Focus on what must be improved.
@@ -204,9 +208,13 @@ IMPORTANT:
 - Every level must be exactly one of: "Beginner", "Intermediate", or "Advanced".
 - If there is no issue, use an empty array [].
 - If there is no corrected sentence, use an empty array [].
-- The transcript must contain only the student's speech.
 - The evaluation must be based only on the given rubric.
 - Use simple English suitable for university students.
+- Never write comments inside JSON arrays.
+- Never write explanations outside string values.
+- Every item in an array must be a valid JSON string or object.
+- Do not write invalid JSON such as: "word" (comment).
+- If you want to add a comment, put it inside the same string, for example: "word (comment)".
 
 OVERALL LEVEL RULES:
 - The overall_speaking_level must reflect the weakest major aspects.
